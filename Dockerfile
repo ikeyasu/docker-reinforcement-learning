@@ -62,10 +62,11 @@ RUN mkdir -p /opt/bullet3/build \
 ############################################
 RUN pip3 install keras-rl chainerrl
 
-# Installing dependency manually insted of pip3 install -e baselines
-# because baselines.git has a dependency of mujoco
+# Need to remove mujoco dependency from baselines
 RUN git clone --depth 1 https://github.com/openai/baselines.git \
-    && pip3 install scipy tqdm joblib zmq dill azure==1.0.3 progressbar2 mpi4py
+    && sed --in-place 's/mujoco,//' baselines/setup.py \
+    && pip3 install -e baselines \
+    && pip3 install mpi4py cloudpickle
 
 ############################################
 # Tensorflow (GPU)
