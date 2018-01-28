@@ -1,4 +1,4 @@
-FROM ikeyasu/opengl:cuda8.0-cudnn5-devel-ubuntu16.04
+FROM ikeyasu/opengl:cuda8.0-cudnn5-devel-ubuntu16.04-tmux
 MAINTAINER ikeyasu <ikeyasu@gmail.com>
 
 ENV DEBIAN_FRONTEND oninteractive

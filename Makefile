@@ -5,7 +5,7 @@ ORG = ikeyasu
 IMAGE = roboschool
 
 # Docker TAG
-TAG = latest
+TAG = tmux
 
 build:
 	docker build \
