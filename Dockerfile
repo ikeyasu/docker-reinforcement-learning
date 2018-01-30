@@ -1,4 +1,4 @@
-FROM ikeyasu/opengl:cuda8.0-cudnn5-devel-ubuntu16.04
+FROM ikeyasu/opengl:cuda9.0-cudnn7-devel-ubuntu16.04
 MAINTAINER ikeyasu <ikeyasu@gmail.com>
 
 ENV DEBIAN_FRONTEND oninteractive
@@ -74,7 +74,7 @@ RUN git clone --depth 1 https://github.com/openai/baselines.git \
 # keras selects tensorflow (CPU). So, I uninstall the cpu version,
 # and install the gpu version at the end.
 ############################################
-RUN pip3 install tensorflow-gpu==1.2.1
+RUN pip3 install tensorflow-gpu==1.4
 
 ############################################
 # locate, less, lxterminal, and vim
