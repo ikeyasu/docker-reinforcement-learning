@@ -74,7 +74,7 @@ RUN git clone --depth 1 https://github.com/openai/baselines.git \
 # keras selects tensorflow (CPU). So, I uninstall the cpu version,
 # and install the gpu version at the end.
 ############################################
-RUN pip3 install tensorflow-gpu==1.2.1
+RUN pip3 install tensorflow-gpu==1.5
 
 ############################################
 # locate, less, lxterminal, and vim
