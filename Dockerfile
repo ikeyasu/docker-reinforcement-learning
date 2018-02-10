@@ -60,7 +60,7 @@ RUN mkdir -p /opt/bullet3/build \
 #    Keras-RL
 #    ChainerRL
 ############################################
-RUN pip3 install keras-rl chainerrl
+RUN pip3 install keras-rl chainerrl opencv-python
 
 # Need to remove mujoco dependency from baselines
 RUN git clone --depth 1 https://github.com/openai/baselines.git \
