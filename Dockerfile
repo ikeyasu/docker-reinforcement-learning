@@ -1,4 +1,4 @@
-FROM ikeyasu/opengl:cuda9.0-cudnn7-devel-ubuntu16.04
+FROM ikeyasu/opengl:ubuntu16.04
 MAINTAINER ikeyasu <ikeyasu@gmail.com>
 
 ENV DEBIAN_FRONTEND oninteractive
@@ -25,7 +25,7 @@ WORKDIR /opt
 # https://github.com/fchollet/keras/issues/6997
 ############################################
 RUN pip3 install --upgrade pip
-RUN pip3 install h5py keras future chainer cupy 'gym[atari]' 'gym[box2d]' 'gym[classic_control]'
+RUN pip3 install h5py keras future chainer 'gym[atari]' 'gym[box2d]' 'gym[classic_control]'
 
 ############################################
 # Roboschool
@@ -68,12 +68,9 @@ RUN git clone --depth 1 https://github.com/openai/baselines.git \
     && pip3 install mpi4py cloudpickle
 
 ############################################
-# Tensorflow (GPU)
-# If tensorflow and tensorflow-gpu are installed simultaneously,
-# keras selects tensorflow (CPU). So, I uninstall the cpu version,
-# and install the gpu version at the end.
+# Tensorflow (CPU)
 ############################################
-RUN pip3 install tensorflow-gpu==1.5
+RUN pip3 install tensorflow==1.5
 
 ############################################
 # locate, less, lxterminal, and vim

@@ -5,7 +5,7 @@ ORG = ikeyasu
 IMAGE = roboschool
 
 # Docker TAG
-TAG = latest
+TAG = cpu
 
 build:
 	docker build \
