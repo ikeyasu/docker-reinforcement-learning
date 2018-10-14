@@ -65,7 +65,6 @@ RUN pip3 install keras-rl chainerrl opencv-python
 # Need to remove mujoco dependency from baselines
 RUN git clone --depth 1 https://github.com/openai/baselines.git \
     && sed --in-place 's/mujoco,//' baselines/setup.py \
-    && pip3 install -e baselines \
     && pip3 install mpi4py cloudpickle
 
 ############################################
