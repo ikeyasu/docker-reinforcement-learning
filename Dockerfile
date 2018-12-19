@@ -11,7 +11,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
       python3-opengl python3-pip \
       cmake zlib1g-dev libjpeg-dev xvfb libav-tools \
       xorg-dev libboost-all-dev libsdl2-dev swig \
-      git  wget\
+      git  wget openjdk-8-jdk ffmpeg\
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 ############################################
@@ -25,7 +25,7 @@ WORKDIR /opt
 # https://github.com/fchollet/keras/issues/6997
 ############################################
 RUN pip3 install --upgrade pip
-RUN pip3 install h5py keras future chainer 'gym[atari]' 'gym[box2d]' 'gym[classic_control]'
+RUN pip3 install h5py keras future 'gym[atari]' 'gym[box2d]' 'gym[classic_control]'
 
 ############################################
 # Roboschool
@@ -55,12 +55,26 @@ RUN mkdir -p /opt/bullet3/build \
     && make clean
 
 ############################################
+# marlo
+############################################
+
+RUN pip3 install -U malmo
+RUN pip3 install -U marlo
+
+RUN cd /opt \
+    && python3 -c 'import malmo.minecraftbootstrap; malmo.minecraftbootstrap.download()' \
+    && chwon -R user:user MalmoPlatform/
+
+ENV MALMO_MINECRAFT_ROOT /opt/MalmoPlatform/Minecraft
+
+############################################
 # Deep Reinforcement Learning
 #    OpenAI Baselines
 #    Keras-RL
 #    ChainerRL
 ############################################
-RUN pip3 install keras-rl chainerrl opencv-python
+RUN pip3 install keras-rl opencv-python
+RUN pip3 install chainer==5.1.0 chainerrl==0.5.0
 
 # Need to remove mujoco dependency from baselines
 RUN git clone --depth 1 https://github.com/openai/baselines.git \
@@ -70,7 +84,7 @@ RUN git clone --depth 1 https://github.com/openai/baselines.git \
 ############################################
 # Tensorflow (CPU)
 ############################################
-RUN pip3 install tensorflow==1.5
+RUN pip3 install tensorflow==1.8
 
 ############################################
 # locate, less, lxterminal, and vim

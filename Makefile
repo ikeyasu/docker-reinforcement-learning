@@ -2,7 +2,7 @@
 ORG = ikeyasu
 
 # Name of image
-IMAGE = roboschool
+IMAGE = reinforcement-learning
 
 # Docker TAG
 TAG = cpu
