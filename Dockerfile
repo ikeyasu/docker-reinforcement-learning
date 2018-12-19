@@ -63,7 +63,7 @@ RUN pip3 install -U marlo
 
 RUN cd /opt \
     && python3 -c 'import malmo.minecraftbootstrap; malmo.minecraftbootstrap.download()' \
-    && chwon -R user:user MalmoPlatform/
+    && chown -R user:user MalmoPlatform/
 
 ENV MALMO_MINECRAFT_ROOT /opt/MalmoPlatform/Minecraft
 
