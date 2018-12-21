@@ -1,6 +1,6 @@
-# docker-roboschool
+# docker-reinforcement-learning
 
-This is GPU powered Docker image for Open AI Roboschool with HTML5 VNC Viewer.
+This is GPU powered Docker image for reinforcement-learning environment with HTML5 VNC Viewer.
 This image is installed ...
 
 * [Open AI roboschool](https://github.com/openai/roboschool)
