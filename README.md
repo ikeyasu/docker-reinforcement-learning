@@ -29,8 +29,8 @@ This image is based on [ikeyasu/opengl:cuda8.0-cudnn5-devel-ubuntu16.04](https:/
 If you have nvidia GPU
 
 ```
-$ docker pull ikeyasu/roboschool
-$ docker run --runtime=nvidia -it -p 6080:6080 ikeyasu/roboschool:latest
+$ docker pull ikeyasu/reinforcement-learning
+$ docker run --runtime=nvidia -it -p 6080:6080 ikeyasu/reinforcement-learning:latest
 ```
 
 Please open http://localhost:6080 or http://(host ip address):6080 on browser.
