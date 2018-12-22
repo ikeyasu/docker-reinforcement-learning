@@ -11,7 +11,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
       python3-opengl python3-pip \
       cmake zlib1g-dev libjpeg-dev xvfb libav-tools \
       xorg-dev libboost-all-dev libsdl2-dev swig \
-      git  wget openjdk-8-jdk ffmpeg\
+      git wget openjdk-8-jdk ffmpeg unzip\
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 ############################################
