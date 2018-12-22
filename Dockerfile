@@ -1,4 +1,4 @@
-FROM ikeyasu/opengl:cuda9.2-cudnn7-devel-ubuntu16.04
+FROM ikeyasu/opengl:cuda9.0-cudnn7-devel-ubuntu16.04
 MAINTAINER ikeyasu <ikeyasu@gmail.com>
 
 ENV DEBIAN_FRONTEND oninteractive
@@ -11,7 +11,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
       python3-opengl python3-pip \
       cmake zlib1g-dev libjpeg-dev xvfb libav-tools \
       xorg-dev libboost-all-dev libsdl2-dev swig \
-      git  wget openjdk-8-jdk ffmpeg\
+      git wget openjdk-8-jdk ffmpeg unzip\
     && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 ############################################
@@ -74,7 +74,7 @@ ENV MALMO_MINECRAFT_ROOT /opt/MalmoPlatform/Minecraft
 #    ChainerRL
 ############################################
 RUN pip3 install keras-rl opencv-python
-RUN pip3 install chainer==5.1.0 cupy-cuda92==5.1.0 chainerrl==0.5.0
+RUN pip3 install chainer==5.1.0 cupy-cuda90==5.1.0 chainerrl==0.5.0
 
 # Need to remove mujoco dependency from baselines
 RUN git clone --depth 1 https://github.com/openai/baselines.git \
