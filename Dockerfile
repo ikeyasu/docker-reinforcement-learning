@@ -25,7 +25,7 @@ WORKDIR /opt
 # https://github.com/fchollet/keras/issues/6997
 ############################################
 RUN pip3 install --upgrade pip
-RUN pip3 install h5py keras future 'gym[atari]' 'gym[box2d]' 'gym[classic_control]'
+RUN pip3 install h5py keras future pyvirtualdisplay 'gym[atari]' 'gym[box2d]' 'gym[classic_control]'
 
 ############################################
 # Roboschool
