@@ -28,6 +28,11 @@ RUN pip3 install --upgrade pip
 RUN pip3 install h5py keras future pyvirtualdisplay 'gym[atari]' 'gym[box2d]' 'gym[classic_control]'
 
 ############################################
+# PyBullet
+############################################
+RUN pip3 install pybullet
+
+############################################
 # Roboschool
 ############################################
 RUN apt-get update && apt-get install -y \
