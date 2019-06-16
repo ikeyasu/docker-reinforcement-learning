@@ -28,36 +28,26 @@ RUN pip3 install --upgrade pip
 RUN pip3 install h5py keras future pyvirtualdisplay 'gym[atari]' 'gym[box2d]' 'gym[classic_control]'
 
 ############################################
-# PyBullet
-############################################
-RUN pip3 install pybullet
-
-############################################
 # Roboschool
+# https://github.com/openai/roboschool/blob/d057eaa/Dockerfile
 ############################################
 RUN apt-get update && apt-get install -y \
       git cmake ffmpeg pkg-config \
       qtbase5-dev libqt5opengl5-dev libassimp-dev \
-      libpython3.5-dev libboost-python-dev libtinyxml-dev \
-    && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
-    && git clone --depth 1 https://github.com/olegklimov/bullet3 -b roboschool_self_collision \
+      patchelf curl\
+    && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*\
     && git clone --depth 1 https://github.com/openai/roboschool
 
 ENV ROBOSCHOOL_PATH /opt/roboschool
 
-RUN mkdir -p /opt/bullet3/build \
-    && cd /opt/bullet3/build \
-    && cmake -DBUILD_SHARED_LIBS=ON -DUSE_DOUBLE_PRECISION=1 \
-       -DCMAKE_INSTALL_PREFIX:PATH=${ROBOSCHOOL_PATH}/roboschool/cpp-household/bullet_local_install \
-       -DBUILD_CPU_DEMOS=OFF -DBUILD_BULLET2_DEMOS=OFF \
-       -DBUILD_EXTRAS=OFF  -DBUILD_UNIT_TESTS=OFF \
-       -DBUILD_CLSOCKET=OFF -DBUILD_ENET=OFF \
-       -DBUILD_OPENGL3_DEMOS=OFF .. \
-    && make \
-    && make install \
-    && pip3 install -e ${ROBOSCHOOL_PATH} \
-    && ldconfig \
-    && make clean
+RUN cd $ROBOSCHOOL_PATH && bash -c ". ./exports.sh && ./install_boost.sh"
+RUN cd $ROBOSCHOOL_PATH && bash -c ". ./exports.sh && ./install_bullet.sh"
+RUN cd /usr/lib/x86_64-linux-gnu && ln -s libboost_python-py35.so libboost_python35.so 
+RUN cd $ROBOSCHOOL_PATH && bash -c ". ./exports.sh && PYTHONPATH=/usr/bin/python3 CPLUS_INCLUDE_PATH=/usr/include/python3.5 ./roboschool_compile_and_graft.sh"
+RUN pip install -e $ROBOSCHOOL_PATH
+
+# test
+RUN python3 -c "import gym; gym.make('roboschool:RoboschoolAnt-v1').reset()"
 
 ############################################
 # marlo
@@ -79,7 +69,7 @@ ENV MALMO_MINECRAFT_ROOT /opt/MalmoPlatform/Minecraft
 #    ChainerRL
 ############################################
 RUN pip3 install keras-rl opencv-python
-RUN pip3 install chainer==5.1.0 cupy-cuda90==5.1.0 chainerrl==0.5.0
+RUN pip3 install chainer==5.1.0 cupy-cuda90==5.1.0 chainerrl==0.6.0
 
 # Need to remove mujoco dependency from baselines
 RUN git clone --depth 1 https://github.com/openai/baselines.git \
@@ -93,6 +83,12 @@ RUN git clone --depth 1 https://github.com/openai/baselines.git \
 # and install the gpu version at the end.
 ############################################
 RUN pip3 install tensorflow-gpu==1.8
+
+############################################
+# PyBullet
+############################################
+RUN pip3 install pybullet==2.5.0
+RUN sed -i 's/robot_bases/pybullet_envs.robot_bases/' /usr/local/lib/python3.5/dist-packages/pybullet_envs/robot_locomotors.py
 
 ############################################
 # locate, less, lxterminal, and vim
